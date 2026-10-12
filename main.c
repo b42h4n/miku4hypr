@@ -1,29 +1,20 @@
 #include <raylib.h>
 #include <stdio.h>
 
-// Фикс конфликта объявлений Font между Raylib и X11
-#define Font X11Font
-#include <X11/Xlib.h>
-#include <X11/extensions/shape.h>
-#undef Font
-
 #define FRAME_COUNT 222
-void MakeWindowClickThrough(void); //Без прототипа не компилируется, т.к. функция объявлена ниже мейна
+#define ANIM_FPS 24.0f
+
 int main(void) {
-    // Без рамок, с прозрачным фоном и поверх всех
-    SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_TOPMOST);
+    SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TRANSPARENT |
+                   FLAG_WINDOW_TOPMOST | FLAG_WINDOW_MOUSE_PASSTHROUGH);
 
     InitWindow(800, 800, "Hatsune Miku");
     SetExitKey(KEY_NULL);
-    SetTargetFPS(80);
+    SetTargetFPS(30);
 
-    // Включаем 100% пролет кликов
-    MakeWindowClickThrough();
-
-    Texture2D frames[FRAME_COUNT];
+    Texture2D frames[FRAME_COUNT] = {0};
     char fileName[64];
 
-    // Загрузка и хромакей
     for (int i = 0; i < FRAME_COUNT; i++) {
         snprintf(fileName, sizeof(fileName), "assets/frame_%03d.png", i + 1);
 
@@ -35,8 +26,13 @@ int main(void) {
             int totalPixels = img.width * img.height;
 
             for (int j = 0; j < totalPixels; j++) {
-                if (pixels[j].r < 35 && pixels[j].g < 35 && pixels[j].b < 35) {
+                int m = pixels[j].r > pixels[j].g ? pixels[j].r : pixels[j].g;
+                if (pixels[j].b > m) m = pixels[j].b;
+
+                if (m < 35) {
                     pixels[j] = BLANK;
+                } else if (m < 70) {
+                    pixels[j].a = (unsigned char)((m - 35) * 255 / 35);
                 }
             }
 
@@ -45,47 +41,21 @@ int main(void) {
         }
     }
 
-    int currentFrame = 0;
-    int frameCounter = 0;
-
-    // Главный цикл
     while (!WindowShouldClose()) {
-        frameCounter++;
-        if (frameCounter >= 3) {
-            currentFrame = (currentFrame + 1) % FRAME_COUNT;
-            frameCounter = 0;
-        }
+        int currentFrame = (int)(GetTime() * ANIM_FPS) % FRAME_COUNT;
 
         BeginDrawing();
             ClearBackground(BLANK);
-            DrawTexture(frames[currentFrame], 100, -340, WHITE);
+            if (frames[currentFrame].id != 0) {
+                DrawTexture(frames[currentFrame], 100, -340, WHITE);
+            }
         EndDrawing();
     }
 
     for (int i = 0; i < FRAME_COUNT; i++) {
-        UnloadTexture(frames[i]);
+        if (frames[i].id != 0) UnloadTexture(frames[i]);
     }
 
     CloseWindow();
     return 0;
-}
-// Полное отключение кликов и фокуса мыши по окну
-void MakeWindowClickThrough(void) {
-    Display *display = XOpenDisplay(NULL);
-    if (!display) return;
-
-    void *ptr = GetWindowHandle();
-    if (!ptr) {
-        XCloseDisplay(display);
-        return;
-    }
-
-    Window window = *(Window *)ptr;
-
-    // Задаем пустую область ввода — мышь физически "не видит" окно
-    XRectangle rect = {0, 0, 0, 0};
-    XShapeCombineRectangles(display, window, ShapeInput, 0, 0, &rect, 1, ShapeSet, YXBanded);
-
-    XFlush(display);
-    XCloseDisplay(display);
 }
