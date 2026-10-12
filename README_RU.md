@@ -2,21 +2,20 @@
 
 
 
-# Fork Hatsune Miku Desktop Mascot for hyprland / Форк Настольный маскот Хацунэ Мику на хупрленд
+# Форк Hatsune Miku Desktop Mascot на hyprland
 
 
 > *Та самая Мику из тренда «слышь ты залип, опа опа оп»!*
-> > That same Miku from the "slysh ty zalip, opa opa op" trend!
 > 
 > [Read in English](README.md)
 > ---
 ## Русская версия
 
-Маскот для рабочего стола Linux, написанный на чистом C с использованием библиотеки Raylib. Никакого Wallpaper Engine или Anima Engine не требуется.
+Маскот для рабочего стола Linux систем, написанный на C с использованием библиотеки Raylib. Wallpaper Engine или Anima Engine не требуется.
 
 ### Совместимость
 
- * Форк 100% работает на: Hyprland на Wayland
+ * Форк 100% работает на: Hyprland и KDE Plasma
  
 ### Зависимости
 
@@ -43,10 +42,10 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
 
   * Клонируйте репозиторий и перейдите в папку:
 ```bash
-  git clone https://github.com/floppamqs1/miku-desktop-mascot-trend-hyprland.git
+  git clone https://github.com/b42h4n/miku4hypr
    ```
 ```bash
-   cd miku-desktop-mascot-trend-hyprland
+   cd miku4hypr
    ```
   * Скомпилируйте:
 ```bash
