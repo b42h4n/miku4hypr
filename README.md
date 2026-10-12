@@ -2,49 +2,45 @@
 
 
 
-# Fork Hatsune Miku Desktop Mascot for hyprland / Форк Настольный маскот Хацунэ Мику на хупрленд
+# Fork Hatsune Miku Desktop Mascot for hyprland
 
 
-> That same Miku from the "slysh ty zalip, opa opa op" trend!
+> Miku from tiktok trend
 > 
-> *Та самая Мику из тренда «слышь ты залип, опа опа оп»!*
-> 
-> [Переход на Русскую версию](README_RU.md)
+> [RU ver](README_RU.md)
 
 ---
 
 ## English Version
 
 
-Desktop mascot for Linux written in pure C using the Raylib library. No Wallpaper Engine or Anima Engine required.
+Desktop mascot for Linux systems written in pure C using Raylib. No Wallpaper Engine or Anima Engine required.
 
 
 ### Compatibility
 
-* Fork 100% Working on: Hyprland on Wayland
+* Fork 100% Working on: Hyprland, and KDE Plasma
 
 
 ### Dependencies
 
 
 * For Arch-based distros:
-```bash
-
+```shell
 sudo pacman -S gcc make raylib libx11
 ```
 
 * For Debian/Ubuntu-based distros:
-```bash
-
+```shell
 sudo apt update
 ```
-```bash
+```shell
 
 sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
 ```
 
 * For Fedora-based distros:
-```bash
+```shell
   sudo dnf install gcc make raylib-devel libX11-devel libXext-devel
   ```
 
@@ -53,15 +49,15 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
 
  * Clone the repository and enter the directory:
    
-```bash
- git clone https://github.com/floppamqs1/miku-desktop-mascot-trend-hyprland.git
+```shell
+ git clone https://github.com/b42h4n/miku4hypr
  ```
-```bash
- cd miku-desktop-mascot-trend-hyprland
+```shell
+ cd miku4hypr
   ```
 
  * Also, you need add this on .config/hypr/config/windowrules.lua
-```bash
+```lua
   hl.window_rule({
     match = { title = "^(Hatsune Miku)$" },
     float = true,
@@ -77,11 +73,11 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
   ```
 
  * Compile
-```bash
+```shell
    gcc main.c -o miku -lraylib -lX11 -lGL -lm -lpthread -ldl -lrt -lXext
    ```
  * Run the mascot:
-```bash
+```shell
    ./miku
   ```
 
