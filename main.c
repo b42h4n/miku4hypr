@@ -6,6 +6,7 @@
 #define ANIM_FPS 24.0f
 #define WIN_W 800
 #define WIN_H 800
+#define FIX_FRAMES 30
 
 static int parse_int(const char *s, int *out) {
     char *end;
@@ -35,16 +36,20 @@ int main(int argc, char **argv) {
     SetExitKey(KEY_NULL);
     SetTargetFPS(30);
 
+    int targetX, targetY;
+
     if (hasPos) {
-        SetWindowPosition(posX, posY);
+        targetX = posX;
+        targetY = posY;
     } else {
         int mon = GetCurrentMonitor();
         Vector2 monPos = GetMonitorPosition(mon);
-        int mw = GetMonitorWidth(mon);
-        int mh = GetMonitorHeight(mon);
-        SetWindowPosition((int)monPos.x + mw - WIN_W,
-                          (int)monPos.y + mh - WIN_H);
+        targetX = (int)monPos.x + GetMonitorWidth(mon) - WIN_W;
+        targetY = (int)monPos.y + GetMonitorHeight(mon) - WIN_H;
     }
+
+    SetWindowPosition(targetX, targetY);
+    int posApplied = 0;
 
     Texture2D frames[FRAME_COUNT] = {0};
     char fileName[64];
@@ -76,6 +81,11 @@ int main(int argc, char **argv) {
     }
 
     while (!WindowShouldClose()) {
+        if (posApplied < FIX_FRAMES) {
+            SetWindowPosition(targetX, targetY);
+            posApplied++;
+        }
+
         int currentFrame = (int)(GetTime() * ANIM_FPS) % FRAME_COUNT;
 
         BeginDrawing();
