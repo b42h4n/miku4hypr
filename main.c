@@ -1,16 +1,50 @@
 #include <raylib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define FRAME_COUNT 222
 #define ANIM_FPS 24.0f
+#define WIN_W 800
+#define WIN_H 800
 
-int main(void) {
+static int parse_int(const char *s, int *out) {
+    char *end;
+    long v = strtol(s, &end, 10);
+    if (end == s || *end != '\0') return 0;
+    *out = (int)v;
+    return 1;
+}
+
+int main(int argc, char **argv) {
+    int hasPos = 0, posX = 0, posY = 0;
+
+    if (argc >= 3) {
+        if (parse_int(argv[1], &posX) && parse_int(argv[2], &posY)) {
+            hasPos = 1;
+        } else {
+            fprintf(stderr, "Использование: %s [x y]\nПример: %s -300 100\n",
+                    argv[0], argv[0]);
+            return 1;
+        }
+    }
+
     SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TRANSPARENT |
                    FLAG_WINDOW_TOPMOST | FLAG_WINDOW_MOUSE_PASSTHROUGH);
 
-    InitWindow(800, 800, "Hatsune Miku");
+    InitWindow(WIN_W, WIN_H, "Hatsune Miku");
     SetExitKey(KEY_NULL);
     SetTargetFPS(30);
+
+    if (hasPos) {
+        SetWindowPosition(posX, posY);
+    } else {
+        int mon = GetCurrentMonitor();
+        Vector2 monPos = GetMonitorPosition(mon);
+        int mw = GetMonitorWidth(mon);
+        int mh = GetMonitorHeight(mon);
+        SetWindowPosition((int)monPos.x + mw - WIN_W,
+                          (int)monPos.y + mh - WIN_H);
+    }
 
     Texture2D frames[FRAME_COUNT] = {0};
     char fileName[64];
