@@ -7,7 +7,7 @@
 #define ANIM_FPS 24.0f
 #define WIN_W 800
 #define WIN_H 800
-#define FIX_FRAMES 30  // сколько первых кадров повторно ставить позицию
+#define FIX_FRAMES 30
 
 #ifdef USE_X11
 typedef unsigned long XID;
