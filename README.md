@@ -56,7 +56,15 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
  cd miku4hypr
   ```
 
- * Also, you need add this on .config/hypr/config/windowrules.lua
+ * Compile
+```shell
+   gcc main.c -o miku -lraylib -lX11 -lGL -lm -lpthread -ldl -lrt -lXext
+   ```
+ * Run the mascot:
+```shell
+   ./miku
+  ```
+ * Also, you need add this on ~/.config/hypr/hyprland.lua or ~/.config/hypr/config/windowrules.lua if you do modular partitioning:
 ```lua
   hl.window_rule({
     match = { title = "^(Hatsune Miku)$" },
@@ -71,16 +79,28 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
     move = { 1120, 433 },
   })
   ```
-
- * Compile
-```shell
-   gcc main.c -o miku -lraylib -lX11 -lGL -lm -lpthread -ldl -lrt -lXext
-   ```
- * Run the mascot:
-```shell
-   ./miku
-  ```
-
+If your hyprland version is 0.52 or lover, add this to ~/.config/hypr/hyprland.conf:
+```hyprland
+windowrulev2 = float,    title:^(Hatsune Miku)$
+windowrulev2 = pin,      title:^(Hatsune Miku)$
+windowrulev2 = move 1220 433, title:^(Hatsune Miku)$
+windowrulev2 = nofocus,  title:^(Hatsune Miku)$
+windowrulev2 = noborder, title:^(Hatsune Miku)$
+windowrulev2 = noshadow, title:^(Hatsune Miku)$
+windowrulev2 = noanim,   title:^(Hatsune Miku)$
+windowrulev2 = rounding 0, title:^(Hatsune Miku)$
+```
+And if your hyprland version is 0.53, add this:
+```hyprlang
+windowrule = float on, match:title ^(Hatsune Miku)$
+windowrule = pin on, match:title ^(Hatsune Miku)$
+windowrule = move 1220 433, match:title ^(Hatsune Miku)$
+windowrule = no_focus on, match:title ^(Hatsune Miku)$
+windowrule = no_border on, match:title ^(Hatsune Miku)$
+windowrule = no_shadow on, match:title ^(Hatsune Miku)$
+windowrule = no_anim on, match:title ^(Hatsune Miku)$
+windowrule = rounding 0, match:title ^(Hatsune Miku)$
+```
 
 ### Note
 
