@@ -64,7 +64,7 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
 ```shell
    ./miku
   ```
- * Also, you need add this on ~/.config/hypr/hyprland.lua or ~/.config/hypr/config/windowrules.lua if you do modular partitioning:
+ * Also, you need add this on ~/.config/hypr/hyprland.lua (or ~/.config/hypr/config/windowrules.lua if you do modular partitioning):
 ```lua
   hl.window_rule({
     match = { title = "^(Hatsune Miku)$" },
