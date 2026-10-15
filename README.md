@@ -79,7 +79,7 @@ sudo apt install build-essential libraylib-dev libx11-dev libxext-dev
     move = { 1120, 433 },
   })
   ```
-If your hyprland version is 0.52 or lover, add this to ~/.config/hypr/hyprland.conf:
+If your hyprland version is 0.52 or lower, add this to ~/.config/hypr/hyprland.conf:
 ```hyprland
 windowrulev2 = float,    title:^(Hatsune Miku)$
 windowrulev2 = pin,      title:^(Hatsune Miku)$
