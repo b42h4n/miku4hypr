@@ -83,7 +83,7 @@ If your hyprland version is 0.52 or lower, add this to ~/.config/hypr/hyprland.c
 ```hyprland
 windowrulev2 = float,    title:^(Hatsune Miku)$
 windowrulev2 = pin,      title:^(Hatsune Miku)$
-windowrulev2 = move 1220 433, title:^(Hatsune Miku)$
+windowrulev2 = move 100%-w 433, title:^(Hatsune Miku)$
 windowrulev2 = nofocus,  title:^(Hatsune Miku)$
 windowrulev2 = noborder, title:^(Hatsune Miku)$
 windowrulev2 = noshadow, title:^(Hatsune Miku)$
@@ -94,7 +94,7 @@ And if your hyprland version is 0.53, add this:
 ```hyprlang
 windowrule = float on, match:title ^(Hatsune Miku)$
 windowrule = pin on, match:title ^(Hatsune Miku)$
-windowrule = move 1220 433, match:title ^(Hatsune Miku)$
+windowrule = move (monitor_w-window_w) 433, match:title ^(Hatsune Miku)$
 windowrule = no_focus on, match:title ^(Hatsune Miku)$
 windowrule = no_border on, match:title ^(Hatsune Miku)$
 windowrule = no_shadow on, match:title ^(Hatsune Miku)$
